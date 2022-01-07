@@ -101,10 +101,12 @@ export default function Header() {
           <div className="h-12 w-12 rounded-full flex justify-center items-center border-purple-500 border-2 text-center">
             {user && user.photoURL ? (
               <Image src={user.photoURL} alt="MK" width={12} height={12} />
-            ) : (
+            ) : user && user.displayName ? (
               `${user.displayName.charAt(0).toUpperCase()}${user.displayName
-                .split(" ")[1].charAt(0).toUpperCase()}`
-            )}
+                .split(" ")[1]
+                .charAt(0)
+                .toUpperCase()}`
+            ) : null}
           </div>
           <button
             type="button"

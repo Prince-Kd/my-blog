@@ -2,6 +2,7 @@ import { useRouter } from "next/router";
 import Link from "next/link";
 import { createUser } from "../firebaseConfig";
 import { useState } from "react";
+import swal from "sweetalert";
 
 export default function SignUp() {
   const router = useRouter();
@@ -13,16 +14,23 @@ export default function SignUp() {
   const [password, setPassword] = useState();
   const [confirmPassword, setConfirmPassWord] = useState();
 
+  const [hide, setHide] = useState(true)
+
   const handleSubmit = (e) => {
     e.preventDefault();
-    createUser(firstname, lastname, email, password).then((user) => {
-      if (user) {
-        router.push("/");
-      }
-    });
+    if (password == confirmPassword) {
+      createUser(firstname, lastname, email, password).then(() => {
+          swal(
+              "",
+              "Sign up successful!",
+              "success"
+          )
+          router.push("/");
+      });
+    }
   };
   return (
-    <div className="flex flex-col justify-center items-center h-screen my-auto">
+    <div className="flex flex-col justify-center items-center h-screen my-auto mx-auto">
       <h1 className="text-5xl text-purple-500 text-center font-bold ">
         BLOGGER SPACE{" "}
       </h1>
@@ -37,19 +45,20 @@ export default function SignUp() {
               type={"text"}
               required
               placeholder="Firstname"
-              className="rounded-md p-1 border-2 border-gray-300 focus:border-2 hover:border-purple-500 h-12 w-80"
+              className="rounded-md p-1 border-2 border-gray-300 focus:border-2 hover:border-purple-500 h-12 w-80 px-2"
               onChange={(e) => {
                 setFirstname(e.target.value);
               }}
             />
           </div>
+          <div className="w-10"></div>
           <div className="flex flex-col">
             <label>Lastname:</label>
             <input
               type={"text"}
               required
               placeholder="Lastname"
-              className="rounded-md p-1 border-2 border-gray-300 focus:border-2 hover:border-purple-500 h-12 w-80"
+              className="rounded-md p-1 border-2 border-gray-300 focus:border-2 hover:border-purple-500 h-12 w-80 px-2"
               onChange={(e) => {
                 setLastname(e.target.value);
               }}
@@ -63,50 +72,76 @@ export default function SignUp() {
             <input
               type={"text"}
               required
-              className="rounded-md p-1 border-2 border-gray-300 focus:border-2 hover:border-purple-500 h-12 w-80"
+              placeholder="Email"
+              className="rounded-md p-1 border-2 border-gray-300 focus:border-2 hover:border-purple-500 h-12 w-80 px-2"
               onChange={(e) => {
                 setEmail(e.target.value);
               }}
             />
           </div>
+          <div className="w-10"></div>
           <div className="flex flex-col">
             <label>Phone number:</label>
             <input
               type={"text"}
               required
               placeholder="Phone"
-              className="rounded-md p-1 border-2 border-gray-300 focus:border-2 hover:border-purple-500 h-12 w-80"
+              className="rounded-md p-1 border-2 border-gray-300 focus:border-2 hover:border-purple-500 h-12 w-80 px-2"
               onChange={(e) => {
                 setPhone(e.target.value);
               }}
             />
           </div>
         </div>
-        <div className="h-2"></div>
-        <div className="flex flex-row">
-
+        <div className="h-4"></div>
+        <div className="flex flex-row justify-around items-center">
+          <div className="flex flex-col">
+            <label>Password:</label>
+            <input
+              type={"password"}
+              required
+              placeholder="Password"
+              className="rounded-md p-1 border-2 border-gray-300 focus:border-2 hover:border-purple-500 h-12 w-80 px-2"
+              onChange={(e) => {
+                setPassword(e.target.value);
+              }}
+            />
+          </div>
+          <div className="w-10"></div>
+          <div className="flex flex-col">
+            <label>Confirm password:</label>
+            <input
+              type={"password"}
+              required
+              placeholder="Confirm password"
+              className="rounded-md p-1 border-2 border-gray-300 focus:border-2 hover:border-purple-500 h-12 w-80 px-2"
+              onChange={(e) => {
+                if(password != e.target.value){
+                    setHide(false)
+                }else{
+                    setHide(true)
+                    setConfirmPassWord(e.target.value);
+                }
+                
+              }}
+            />
+          </div>
         </div>
-        <div className="flex flex-col">
-          <label>Password:</label>
+        {!hide ? (<div className="text-sm text-red-500 text-right">Passwords do not match</div>) : null}
+
+        <div className="h-6"></div>
+        <div className="flex flex-row items-center justify-center">
           <input
-            type={"password"}
-            required
-            className="rounded-md p-1 border-2 border-gray-300 focus:border-2 hover:border-purple-500 h-12 w-80"
-            onChange={(e) => {
-              setPassword(e.target.value);
-            }}
+            className="bg-purple-500 rounded-md h-14 w-80 text-center cursor-pointer text-white font-medium "
+            type={"submit"}
+            value={"SIGN UP"}
           />
         </div>
-        <div className="h-4"></div>
-        <input
-          className="bg-purple-500 rounded-md h-12 w-80 text-center cursor-pointer text-white font-medium"
-          type={"submit"}
-          value={"LOG IN"}
-        />
-        <div className="h-4"></div>
+
+        <div className="h-6"></div>
         <div className="text-center">
-          Don't have an account?{" "}
-          <Link href={"/sign_up"}>
+          Already have an account?{" "}
+          <Link href={"/log_in"}>
             <a className="text-purple-500 text-center">Sign up</a>
           </Link>
         </div>

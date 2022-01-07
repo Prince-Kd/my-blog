@@ -22,16 +22,15 @@ export async function loginUser(email, password) {
           profilePhoto: `${user.photoURL}`,
         })
       );
-      return user;
     })
     .catch((error) => {
       var errorCode = error.code;
       var errorMessage = error.message;
-      swal(errorCode, errorMessage, "error");
+      swal("Auht error", errorMessage, "error");
     });
 }
 
-export function createUser(firstname, lastname, email, password) {
+export async function createUser(firstname, lastname, email, password) {
   firebase
     .auth()
     .createUserWithEmailAndPassword(email, password)
@@ -63,7 +62,6 @@ export function createUser(firstname, lastname, email, password) {
                       profilePhoto: `${newUser.photoURL}`,
                     })
                   );
-                  return newUser;
             })
         })
         .catch((error) => {
@@ -73,7 +71,7 @@ export function createUser(firstname, lastname, email, password) {
     .catch((error) => {
       var errorCode = error.code;
       var errorMessage = error.message;
-      swal(errorCode, errorMessage, "error");
+      swal("Auth error", errorMessage, "error");
     });
 }
 

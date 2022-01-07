@@ -11,10 +11,8 @@ export default function LogIn() {
 
     const handleSubmit = (e) => {
         e.preventDefault()
-        loginUser(email, password).then((user) => {
-            if(user){
+        loginUser(email, password).then(() => {
                 router.push('/')
-            }
         })
     }
   return (
