@@ -20,8 +20,8 @@ export default function BlogCard() {
             <div className="text-center rounded-3xl px-2 py-1 bg-purple-200">Next js</div>
         </div>
       </div>
-      <div id="image" className="h-52 w-72 bg-gray-200">
-          <Image src="/" alt="poster" height={60} width={72}/>
+      <div id="image" className=" w-52 bg-gray-200 border-purple-500 border-2 rounded-md">
+          <img className="h-52 w-52" src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRuzKd9GYJL59dQ1MU8w7VAh313zMEFSN0GQA&usqp=CAU" alt="poster" />
       </div>
     </div>
   );

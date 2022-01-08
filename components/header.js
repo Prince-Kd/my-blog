@@ -62,7 +62,7 @@ export default function Header() {
             Home
           </a>
         </Link>
-        <Link href={cat}>
+        {/* <Link href={cat}>
           <a
             className={`mx-2 ${
               router.pathname == cat
@@ -72,7 +72,7 @@ export default function Header() {
           >
             Categories
           </a>
-        </Link>
+        </Link> */}
         <Link href={user ? create : log_in}>
           <a
             className={`mx-2 ${

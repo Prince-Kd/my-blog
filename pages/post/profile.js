@@ -24,11 +24,12 @@ export default function Profile() {
   return (
     <div>
       <Header />
-      <div className="px-20 py-10 grid grid-cols-3">
-        <div className="col-span-2 pb-10">
-          <div className="mb-10 rounded-md flex flex-col bg-gray-100 shadow-sm justify-center items-center border-t-4 border-purple-500">
-            <div className=" h-52 w-52 m-10 rounded-full border-2 border-white text-center flex justify-center items-center">
-              {userData && userData.profilePhoto ? (
+      <div className="px-72 py-10">
+        <div className="pb-10">
+          <div className="mb-10 p-10 rounded-md flex flex-row bg-gray-100 shadow-sm justify-around border-t-4 border-purple-500">
+            <div className=" h-52 w-52 rounded-full border-4 border-white text-center flex justify-center items-center">
+            <img className="rounded-full" src={"https://avatars.githubusercontent.com/u/34554163?s=400&u=d4f60bd225226a48a0fbd7ed46e1d20954695559&v=4"} />
+              {/* {userData && userData.profilePhoto ? (
                 <Image src={userData.profilePhoto} width={52} height={52} />
               ) : userData ? (
                 <h1 className="text-3xl font-bold">
@@ -37,13 +38,36 @@ export default function Profile() {
                 </h1>
               ) : (
                 ""
-              )}
+              )} */}
             </div>
-            <h1 className=" text-3xl font-bold pb-4">
-              {userData && userData.firstname} {userData && userData.lastname}
-            </h1>
+            <div>
+              <h1 className=" text-3xl font-bold pb-2">
+                {userData && userData.firstname} {userData && userData.lastname}
+              </h1>
+              <h2 className="text-gray-500 pb-2">
+                {userData && userData.email}
+              </h2>
+              <button className="rounded-md w-60 text-center shadow-sm bg-purple-200 p-2 mb-4">
+                Edit profile
+              </button>
+              <div className="flex flex-row justify-around items-center">
+                <div className="text-purple-700 flex mr-2">
+                  <h3 className="font-bold pr-1">20</h3>
+                  <h3>followers</h3>
+                </div>
+                <div className="text-purple-700 flex pr-2">
+                <h3 className="font-bold pr-1">10</h3>
+                  <h3>following</h3>
+                </div>
+                <div className="text-purple-700 flex ">
+                <h3 className="font-bold pr-1">0</h3>
+                  <h3>posts</h3>
+                </div>
+              </div>
+            </div>
           </div>
-          <div className="flex flex-col rounded-md bg-gray-100 shadow-sm justify-center items-center p-10 mb-10 border-t-4 border-purple-500">
+          <div className="relative flex flex-col rounded-md bg-gray-100 shadow-sm justify-center items-center p-10 mb-10 border-t-4 border-purple-500">
+            <button className="py-1 px-3 rounded-md bg-purple-200 text-center text-sm absolute top-2 right-2">Edit</button>
             <h1 className="text-2xl font-medium pb-2">About</h1>
             <div>
               I am passionate about software engineering and learning new
@@ -56,14 +80,20 @@ export default function Profile() {
           </div>
           <div className="flex flex-col rounded-md bg-gray-100 shadow-sm justify-center items-center p-10 mb-10 border-t-4 border-purple-500">
             <h1 className="text-2xl font-medium pb-2">Posts</h1>
-            {userData && userData.posts
-              ? (userData.posts.map((post) => {
-                  return <div>{post}</div>;
-                }))
-              : (<div>You do not have any posts. <Link href={"/post/create"}><a className="text-purple-500">Create one now!</a></Link></div>)}
+            {userData && userData.posts ? (
+              userData.posts.map((post) => {
+                return <div>{post}</div>;
+              })
+            ) : (
+              <div>
+                You do not have any posts.{" "}
+                <Link href={"/post/create"}>
+                  <a className="text-purple-500">Create one now!</a>
+                </Link>
+              </div>
+            )}
           </div>
         </div>
-        <div className="col-span-1" className=""></div>
       </div>
     </div>
   );
