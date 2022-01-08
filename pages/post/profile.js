@@ -82,7 +82,7 @@ export default function Profile() {
             <h1 className="text-2xl font-medium pb-2">Posts</h1>
             {userData && userData.posts ? (
               userData.posts.map((post) => {
-                return <div>{post}</div>;
+                return <div key={post.index}>{post}</div>;
               })
             ) : (
               <div>
