@@ -3,6 +3,7 @@ import Link from "next/link";
 import { createUser } from "../firebaseConfig";
 import { useState } from "react";
 import swal from "sweetalert";
+import Head from "next/head";
 
 export default function SignUp() {
   const router = useRouter();
@@ -31,6 +32,9 @@ export default function SignUp() {
   };
   return (
     <div className="flex flex-col justify-center items-center h-screen my-auto mx-auto">
+      <Head>
+        <title>BLOGGERSPACE | SIGN UP</title>
+      </Head>
       <h1 className="text-5xl text-purple-500 text-center font-bold ">
         BLOGGER SPACE{" "}
       </h1>

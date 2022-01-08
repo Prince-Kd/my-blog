@@ -2,6 +2,8 @@ import { useRouter } from "next/router";
 import Link from "next/link";
 import { loginUser } from "../firebaseConfig";
 import { useState } from "react";
+import Head from "next/head";
+
 
 export default function LogIn() {
   const router = useRouter();
@@ -23,6 +25,9 @@ export default function LogIn() {
   };
   return (
     <div className="flex flex-col justify-center items-center h-screen my-auto">
+      <Head>
+        <title>BLOGGERSPACE | LOG IN</title>
+      </Head>
       <h1 className="text-5xl text-purple-500 text-center font-bold ">
         BLOGGER SPACE{" "}
       </h1>

@@ -6,6 +6,8 @@ import firebase from "firebase/app";
 import "firebase/database";
 import "firebase/auth";
 import Link from "next/link";
+import Head from "next/head";
+
 
 export default function Profile() {
   const [userData, setUserData] = useState();
@@ -28,6 +30,9 @@ export default function Profile() {
   });
   return (
     <div>
+        <Head>
+        <title>BLOGGERSPACE | PROFILE</title>
+      </Head>
       <Header />
       <div className="px-72 py-10">
         <div className="pb-10">
