@@ -87,3 +87,12 @@ export async function logOut() {
       swal("Error!", error.message, "error");
     });
 }
+
+export async function getUser() {
+    var user = JSON.parse(sessionStorage.getItem('user'))
+    //console.log(user)
+    return database.ref('/users/' + user.id).get().then((snapshot) => {
+        var data = snapshot.val()
+        return data
+    });   
+}
