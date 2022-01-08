@@ -38,7 +38,7 @@ export default function LogIn() {
         <div className="h-4"></div>
         <input className="bg-purple-500 rounded-md h-12 w-80 text-center cursor-pointer text-white font-medium" type={'submit'} value={'LOG IN'}/>
         <div className="h-4"></div>
-        <div className="text-center">Don't have an account? <Link href={'/sign_up'}><a className="text-purple-500 text-center">Sign up</a></Link></div>
+        <div className="text-center">{`Don't have an account? `}<Link href={'/sign_up'}><a className="text-purple-500 text-center">Sign up</a></Link></div>
       </form>
     </div>
   );
