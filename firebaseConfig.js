@@ -8,7 +8,7 @@ import "firebase/database";
 var database = firebase.database();
 
 export async function loginUser(email, password) {
-  firebase
+  return firebase
     .auth()
     .signInWithEmailAndPassword(email, password)
     .then((userCredential) => {
@@ -22,6 +22,7 @@ export async function loginUser(email, password) {
           profilePhoto: `${user.photoURL}`,
         })
       );
+      return user;
     })
     .catch((error) => {
       var errorCode = error.code;
@@ -30,8 +31,8 @@ export async function loginUser(email, password) {
     });
 }
 
-export async function createUser(firstname, lastname, email, password) {
-  firebase
+export async function createUser(firstname, lastname, email, phone, password) {
+  return firebase
     .auth()
     .createUserWithEmailAndPassword(email, password)
     .then((userCredential) => {
@@ -47,6 +48,7 @@ export async function createUser(firstname, lastname, email, password) {
                 firstname: firstname,
                 lastname: lastname,
                 email: email,
+                phone: phone,
                 posts: []
             }, (error) => {
                 if(error){
@@ -62,6 +64,7 @@ export async function createUser(firstname, lastname, email, password) {
                       profilePhoto: `${newUser.photoURL}`,
                     })
                   );
+                return newUser;
             })
         })
         .catch((error) => {

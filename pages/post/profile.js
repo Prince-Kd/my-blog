@@ -9,6 +9,8 @@ import Link from "next/link";
 
 export default function Profile() {
   const [userData, setUserData] = useState();
+  const [loading, setLoading] = useState(true);
+
   firebase.auth().onAuthStateChanged((user) => {
     if (user) {
       firebase
@@ -17,7 +19,10 @@ export default function Profile() {
         .get()
         .then((snapshot) => {
           var data = snapshot.val();
-          setUserData(data);
+          if(data){
+              setLoading(false);
+              setUserData(data);
+          }
         });
     }
   });
@@ -42,10 +47,10 @@ export default function Profile() {
             </div>
             <div>
               <h1 className=" text-3xl font-bold pb-2">
-                {userData && userData.firstname} {userData && userData.lastname}
+                {loading ? `loading...` : (`${userData && userData.firstname} ${userData && userData.lastname}`)}
               </h1>
               <h2 className="text-gray-500 pb-2">
-                {userData && userData.email}
+                {loading ? `loading...` : (`${userData && userData.email}`)}
               </h2>
               <button className="rounded-md w-60 text-center shadow-sm bg-purple-200 p-2 mb-4">
                 Edit profile

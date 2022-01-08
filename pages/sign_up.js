@@ -14,19 +14,19 @@ export default function SignUp() {
   const [password, setPassword] = useState();
   const [confirmPassword, setConfirmPassWord] = useState();
 
-  const [hide, setHide] = useState(true)
+  const [hide, setHide] = useState(true);
+  const [loading, setLoading] = useState(false);
 
   const handleSubmit = (e) => {
-    e.preventDefault();
-    if (password == confirmPassword) {
-      createUser(firstname, lastname, email, password).then(() => {
-          swal(
-              "",
-              "Sign up successful!",
-              "success"
-          )
+    if (!loading) {
+      e.preventDefault();
+      setLoading(true)
+      if (password == confirmPassword) {
+        createUser(firstname, lastname, email, password).then(() => {
+          swal("", "Sign up successful!", "success");
           router.push("/");
-      });
+        });
+      }
     }
   };
   return (
@@ -116,25 +116,28 @@ export default function SignUp() {
               placeholder="Confirm password"
               className="rounded-md p-1 border-2 border-gray-300 focus:border-2 hover:border-purple-500 h-12 w-80 px-2"
               onChange={(e) => {
-                if(password != e.target.value){
-                    setHide(false)
-                }else{
-                    setHide(true)
-                    setConfirmPassWord(e.target.value);
+                if (password != e.target.value) {
+                  setHide(false);
+                } else {
+                  setHide(true);
+                  setConfirmPassWord(e.target.value);
                 }
-                
               }}
             />
           </div>
         </div>
-        {!hide ? (<div className="text-sm text-red-500 text-right">Passwords do not match</div>) : null}
+        {!hide ? (
+          <div className="text-sm text-red-500 text-right">
+            Passwords do not match
+          </div>
+        ) : null}
 
         <div className="h-6"></div>
         <div className="flex flex-row items-center justify-center">
           <input
             className="bg-purple-500 rounded-md h-14 w-80 text-center cursor-pointer text-white font-medium "
             type={"submit"}
-            value={"SIGN UP"}
+            value={loading ? "LOADING..." : "SIGN UP"}
           />
         </div>
 
