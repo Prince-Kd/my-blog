@@ -38,7 +38,7 @@ export default function Profile() {
         <div className="pb-10">
           <div className="mb-10 p-10 rounded-md flex flex-row bg-gray-100 shadow-sm justify-around border-t-4 border-purple-500">
             <div className=" h-52 w-52 rounded-full border-4 border-white text-center flex justify-center items-center">
-            <img className="rounded-full" src={"https://avatars.githubusercontent.com/u/34554163?s=400&u=d4f60bd225226a48a0fbd7ed46e1d20954695559&v=4"} />
+            <img className="rounded-full" src={"https://firebasestorage.googleapis.com/v0/b/blogger-space-adbeb.appspot.com/o/post-images%2F-Mt03Ofc6sn0ceE_jH1w?alt=media&token=77113d11-5523-41b8-89fe-50cc531df418"} />
               {/* {userData && userData.profilePhoto ? (
                 <Image src={userData.profilePhoto} width={52} height={52} />
               ) : userData ? (
@@ -90,7 +90,7 @@ export default function Profile() {
           </div>
           <div className="flex flex-col rounded-md bg-gray-100 shadow-sm justify-center items-center p-10 mb-10 border-t-4 border-purple-500">
             <h1 className="text-2xl font-medium pb-2">Posts</h1>
-            {userData && userData.posts ? (
+            {/* {userData && userData.posts ? (
               userData.posts.map((post) => {
                 return <div key={post.index}>{post}</div>;
               })
@@ -101,7 +101,7 @@ export default function Profile() {
                   <a className="text-purple-500">Create one now!</a>
                 </Link>
               </div>
-            )}
+            )} */}
           </div>
         </div>
       </div>

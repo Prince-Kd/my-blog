@@ -4,8 +4,10 @@ import swal from "sweetalert";
 
 import "firebase/auth";
 import "firebase/database";
+import "firebase/storage";
 
 var database = firebase.database();
+var storage = firebase.storage();
 
 export async function loginUser(email, password) {
   return firebase
@@ -44,28 +46,34 @@ export async function createUser(firstname, lastname, email, phone, password) {
           displayName: `${firstname} ${lastname}`,
         })
         .then(() => {
-            database.ref('users/' + newUser.uid).set({
+          database
+            .ref("users/" + newUser.uid)
+            .set(
+              {
                 firstname: firstname,
                 lastname: lastname,
                 email: email,
                 phone: phone,
-                posts: []
-            }, (error) => {
-                if(error){
-                    swal('Error!', "An error occurred.", "error")
+                posts: [],
+              },
+              (error) => {
+                if (error) {
+                  swal("Error!", "An error occurred.", "error");
                 }
-            }).then(()=> {
-                sessionStorage.setItem(
-                    "user",
-                    JSON.stringify({
-                      displayName: `${newUser.displayName}`,
-                      email: `${newUser.email}`,
-                      id: `${newUser.uid}`,
-                      profilePhoto: `${newUser.photoURL}`,
-                    })
-                  );
-                return newUser;
-            })
+              }
+            )
+            .then(() => {
+              sessionStorage.setItem(
+                "user",
+                JSON.stringify({
+                  displayName: `${newUser.displayName}`,
+                  email: `${newUser.email}`,
+                  id: `${newUser.uid}`,
+                  profilePhoto: `${newUser.photoURL}`,
+                })
+              );
+              return newUser;
+            });
         })
         .catch((error) => {
           swal("Error!", error.message, "error");
@@ -83,7 +91,7 @@ export async function logOut() {
     .auth()
     .signOut()
     .then(() => {
-      sessionStorage.removeItem("user")
+      sessionStorage.removeItem("user");
       return true;
     })
     .catch((error) => {
@@ -92,10 +100,42 @@ export async function logOut() {
 }
 
 export async function getUser() {
-    var user = JSON.parse(sessionStorage.getItem('user'))
-    //console.log(user)
-    return database.ref('/users/' + user.id).get().then((snapshot) => {
-        var data = snapshot.val()
-        return data
-    });   
+  return firebase.auth().onAuthStateChanged((user) => {
+    if (user) {
+      return user;
+    }
+  });
+}
+
+export function addPost(postData, setLoading, setPostData) {
+  firebase.auth().onAuthStateChanged((user) => {
+    if (user) {
+      setLoading(true);
+      var newPostKey = database.ref(`users/${user.uid}`).push().key;
+      storage
+        .ref("post-images/" + newPostKey)
+        .put(postData.postImage)
+        .then((snapshot) => {
+          snapshot.ref.getDownloadURL().then((downloadURL) => {
+            var updates = {};
+            updates["/posts/" + newPostKey] = {...postData, postImage: downloadURL};
+            updates["users/" + user.uid + "/posts/" + newPostKey] = {...postData, postImage: downloadURL};
+            database.ref().update(updates, (error) => {
+              setLoading(false);
+              if (error) {
+                swal("Add post", "Post not saved. An error occurred", "error");
+              } else {
+                swal("Add post", "Post uploaded successfully.", "success");
+
+                setPostData((oldState) => ({
+                  ...oldState,
+                  title: "",
+                  post: "",
+                }));
+              }
+            });
+          });
+        });
+    }
+  });
 }
