@@ -27,17 +27,19 @@ export default function Profile() {
           firebase
             .database()
             .ref("/users/" + user.uid + "/posts")
-            .once("value").then((snapshot) => {
+            .get().then((snapshot) => {
                 var posts = [];
                 snapshot.forEach((childSnapshot) => {
                     posts.push(childSnapshot.val());
                 })
               setLoading(false);
-              setUserData({ ...data, posts: posts });
+              setUserData({ ...data, posts: posts  });
             });
         });
     }
   });
+
+  console.log(userData)
 
   const toggle = () => setModal(!modal);
 
@@ -108,22 +110,20 @@ export default function Profile() {
               Edit
             </button>
             <h1 className="text-2xl font-medium pb-2">About</h1>
-            <div>{userData && userData.about}</div>
+            <div>{userData && userData.about || "Say something about yourself."}</div>
           </div>
           <div className="flex flex-col rounded-md bg-gray-100 shadow-sm justify-center items-center p-10 mb-10 border-t-4 border-purple-500">
             <h1 className="text-2xl font-medium pb-2">Posts</h1>
-            {userData && userData.posts ? (
-              userData.posts.map((post) => {
+            {userData && userData.posts.length > 0 ? userData.posts.map((post) => {
                 return <div key={post.index} >{post.title}</div>;
-              })
-            ) : (
-              <div>
+              }) :
+              (<div>
                 You do not have any posts.{" "}
                 <Link href={"/post/create"}>
                   <a className="text-purple-500">Create one now!</a>
                 </Link>
-              </div>
-            )}
+              </div>)
+            }
           </div>
         </div>
       </div>
