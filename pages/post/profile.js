@@ -13,8 +13,8 @@ export default function Profile() {
   const [userData, setUserData] = useState();
   const [loading, setLoading] = useState(true);
   const [modal, setModal] = useState(false);
-  
-    // Toggle for Modal
+
+  //console.log(userData);
 
   firebase.auth().onAuthStateChanged((user) => {
     if (user) {
@@ -23,20 +23,25 @@ export default function Profile() {
         .ref("/users/" + user.uid)
         .get()
         .then((snapshot) => {
-          var data = snapshot.val();
-          if (data) {
-            setLoading(false);
-            setUserData(data);
-          }
+            var data = snapshot.val()
+          firebase
+            .database()
+            .ref("/users/" + user.uid + "/posts")
+            .once("value").then((snapshot) => {
+                var posts = [];
+                snapshot.forEach((childSnapshot) => {
+                    posts.push(childSnapshot.val());
+                })
+              setLoading(false);
+              setUserData({ ...data, posts: posts });
+            });
         });
     }
   });
 
   const toggle = () => setModal(!modal);
 
-  const editProflePhoto = () => {
-
-  }
+  const editProflePhoto = () => {};
   return (
     <div className="w-screen overflow-hidden ">
       <Head>
@@ -48,7 +53,10 @@ export default function Profile() {
           <div className="mb-10 p-10 rounded-md flex flex-row bg-gray-100 shadow-sm justify-around border-t-4 border-purple-500 ">
             <div className=" h-52 w-52 rounded-full border-4 border-white text-center flex justify-center items-center relative">
               {userData && userData.profilePhoto ? (
-                <img src={userData.profilePhoto} className="rounded-full h-52 w-52" />
+                <img
+                  src={userData.profilePhoto}
+                  className="rounded-full h-52 w-52"
+                />
               ) : userData ? (
                 <h1 className="text-3xl font-bold">
                   {userData.firstname.charAt(0)}
@@ -57,10 +65,13 @@ export default function Profile() {
               ) : (
                 ""
               )}
-              <button className="py-1 px-3 rounded-md bg-purple-200 text-center text-sm absolute bottom-2 right-2" onClick={toggle}>
+              <button
+                className="py-1 px-3 rounded-md bg-purple-200 text-center text-sm absolute bottom-2 right-2"
+                onClick={toggle}
+              >
                 Edit
               </button>
-              <ProfilePhotoModal toggle={toggle} modal={modal}/>
+              <ProfilePhotoModal toggle={toggle} modal={modal} />
             </div>
             <div>
               <h1 className=" text-3xl font-bold pb-2">
@@ -97,20 +108,13 @@ export default function Profile() {
               Edit
             </button>
             <h1 className="text-2xl font-medium pb-2">About</h1>
-            <div>
-              I am passionate about software engineering and learning new
-              technologies. Always striving to improve my knowledge of this
-              wonderful field, so I can contribute as much as possible to the
-              future of this industry. Always willing to work on projects that
-              can make life easier for others. My latest project is a mobile
-              application which was built with flutter
-            </div>
+            <div>{userData && userData.about}</div>
           </div>
           <div className="flex flex-col rounded-md bg-gray-100 shadow-sm justify-center items-center p-10 mb-10 border-t-4 border-purple-500">
             <h1 className="text-2xl font-medium pb-2">Posts</h1>
-            {/* {userData && userData.posts ? (
+            {userData && userData.posts ? (
               userData.posts.map((post) => {
-                return <div key={post.index}>{post}</div>;
+                return <div key={post.index} >{post.title}</div>;
               })
             ) : (
               <div>
@@ -119,7 +123,7 @@ export default function Profile() {
                   <a className="text-purple-500">Create one now!</a>
                 </Link>
               </div>
-            )} */}
+            )}
           </div>
         </div>
       </div>

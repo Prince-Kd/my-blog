@@ -59,21 +59,20 @@ export async function createUser(firstname, lastname, email, phone, password) {
               (error) => {
                 if (error) {
                   swal("Error!", "An error occurred.", "error");
+                }else{
+                  sessionStorage.setItem(
+                    "user",
+                    JSON.stringify({
+                      displayName: `${newUser.displayName}`,
+                      email: `${newUser.email}`,
+                      id: `${newUser.uid}`,
+                      profilePhoto: `${newUser.photoURL}`,
+                    })
+                  );
+                  return newUser;
                 }
               }
             )
-            .then(() => {
-              sessionStorage.setItem(
-                "user",
-                JSON.stringify({
-                  displayName: `${newUser.displayName}`,
-                  email: `${newUser.email}`,
-                  id: `${newUser.uid}`,
-                  profilePhoto: `${newUser.photoURL}`,
-                })
-              );
-              return newUser;
-            });
         })
         .catch((error) => {
           swal("Error!", error.message, "error");
@@ -121,6 +120,9 @@ export function addPost(postData, setLoading, setPostData) {
             updates["/posts/" + newPostKey] = {
               ...postData,
               postImage: downloadURL,
+              authorId: user.uid,
+              authorName: user.displayName,
+              authorPhoto: user.photoURL
             };
             updates["users/" + user.uid + "/posts/" + newPostKey] = {
               ...postData,
@@ -197,3 +199,4 @@ export async function uploadProfilePhoto(photo, setLoading) {
     }
   });
 }
+

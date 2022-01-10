@@ -23,7 +23,7 @@ export default function SignUp() {
       e.preventDefault();
       setLoading(true)
       if (password == confirmPassword) {
-        createUser(firstname, lastname, email, password).then(() => {
+        createUser(firstname, lastname, email, password, phone).then(() => {
           swal("", "Sign up successful!", "success");
           router.push("/");
         });
