@@ -100,7 +100,7 @@ export default function Header() {
         <div className="flex flex-row justify-center items-center">
           <div className="h-12 w-12 rounded-full flex justify-center items-center border-purple-500 border-2 text-center">
             {user && user.photoURL ? (
-              <Image src={user.photoURL} alt="MK" width={12} height={12} />
+              <img src={user.photoURL} alt="MK" className="h-12 w-12 rounded-full" />
             ) : user && user.displayName ? (
               `${user.displayName.charAt(0).toUpperCase()}${user.displayName
                 .split(" ")[1]

@@ -87,14 +87,13 @@ export default function Create({ author }) {
               />
             </svg>
             <input
-              value={postData.postImage}
               required
               type={"file"}
               accept="image/png, image/gif, image/jpeg"
               onChange={(e) => {
                 setPostData((oldState) => ({
                   ...oldState,
-                  postImage: e.target.value,
+                  postImage: e.target.files[0],
                 }));
               }}
             />

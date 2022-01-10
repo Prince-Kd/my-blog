@@ -118,8 +118,14 @@ export function addPost(postData, setLoading, setPostData) {
         .then((snapshot) => {
           snapshot.ref.getDownloadURL().then((downloadURL) => {
             var updates = {};
-            updates["/posts/" + newPostKey] = {...postData, postImage: downloadURL};
-            updates["users/" + user.uid + "/posts/" + newPostKey] = {...postData, postImage: downloadURL};
+            updates["/posts/" + newPostKey] = {
+              ...postData,
+              postImage: downloadURL,
+            };
+            updates["users/" + user.uid + "/posts/" + newPostKey] = {
+              ...postData,
+              postImage: downloadURL,
+            };
             database.ref().update(updates, (error) => {
               setLoading(false);
               if (error) {
@@ -134,6 +140,58 @@ export function addPost(postData, setLoading, setPostData) {
                 }));
               }
             });
+          });
+        });
+    }
+  });
+}
+
+export async function uploadProfilePhoto(photo, setLoading) {
+  firebase.auth().onAuthStateChanged((user) => {
+    if (user) {
+      setLoading(true);
+      storage
+        .ref("/profile-photos" + user.uid)
+        .put(photo)
+        .then((snapshot) => {
+          snapshot.ref.getDownloadURL().then((downloadURL) => {
+            database
+              .ref("users/" + user.uid)
+              .update({ profilePhoto: downloadURL }, (error) => {
+                if (error) {
+                  setLoading(false);
+                  swal(
+                    "Profile photo",
+                    "An error occureed. Try again.",
+                    "error"
+                  );
+                } else {
+                  firebase
+                    .auth()
+                    .currentUser.updateProfile({
+                      photoURL: downloadURL,
+                    })
+                    .then(async () => {
+                      database
+                        .ref("users/" + user.uid)
+                        .update({ profilePhoto: downloadURL });
+                      setLoading(false);
+                      swal(
+                        "Profile Photo",
+                        "Profile photo updated successfully.",
+                        "success"
+                      );
+                    })
+                    .catch((error) => {
+                      setLoading(false);
+                      swal(
+                        "Profile photo",
+                        "An error occureed. Try again.",
+                        "error"
+                      );
+                    });
+                }
+              });
           });
         });
     }

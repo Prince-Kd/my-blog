@@ -7,11 +7,14 @@ import "firebase/database";
 import "firebase/auth";
 import Link from "next/link";
 import Head from "next/head";
-
+import ProfilePhotoModal from "../../components/profile_photo_update_modal";
 
 export default function Profile() {
   const [userData, setUserData] = useState();
   const [loading, setLoading] = useState(true);
+  const [modal, setModal] = useState(false);
+  
+    // Toggle for Modal
 
   firebase.auth().onAuthStateChanged((user) => {
     if (user) {
@@ -21,26 +24,31 @@ export default function Profile() {
         .get()
         .then((snapshot) => {
           var data = snapshot.val();
-          if(data){
-              setLoading(false);
-              setUserData(data);
+          if (data) {
+            setLoading(false);
+            setUserData(data);
           }
         });
     }
   });
+
+  const toggle = () => setModal(!modal);
+
+  const editProflePhoto = () => {
+
+  }
   return (
-    <div>
-        <Head>
+    <div className="w-screen overflow-hidden ">
+      <Head>
         <title>BLOGGERSPACE | PROFILE</title>
       </Head>
       <Header />
       <div className="px-72 py-10">
         <div className="pb-10">
-          <div className="mb-10 p-10 rounded-md flex flex-row bg-gray-100 shadow-sm justify-around border-t-4 border-purple-500">
-            <div className=" h-52 w-52 rounded-full border-4 border-white text-center flex justify-center items-center">
-            <img className="rounded-full" src={"https://firebasestorage.googleapis.com/v0/b/blogger-space-adbeb.appspot.com/o/post-images%2F-Mt03Ofc6sn0ceE_jH1w?alt=media&token=77113d11-5523-41b8-89fe-50cc531df418"} />
-              {/* {userData && userData.profilePhoto ? (
-                <Image src={userData.profilePhoto} width={52} height={52} />
+          <div className="mb-10 p-10 rounded-md flex flex-row bg-gray-100 shadow-sm justify-around border-t-4 border-purple-500 ">
+            <div className=" h-52 w-52 rounded-full border-4 border-white text-center flex justify-center items-center relative">
+              {userData && userData.profilePhoto ? (
+                <img src={userData.profilePhoto} className="rounded-full h-52 w-52" />
               ) : userData ? (
                 <h1 className="text-3xl font-bold">
                   {userData.firstname.charAt(0)}
@@ -48,14 +56,22 @@ export default function Profile() {
                 </h1>
               ) : (
                 ""
-              )} */}
+              )}
+              <button className="py-1 px-3 rounded-md bg-purple-200 text-center text-sm absolute bottom-2 right-2" onClick={toggle}>
+                Edit
+              </button>
+              <ProfilePhotoModal toggle={toggle} modal={modal}/>
             </div>
             <div>
               <h1 className=" text-3xl font-bold pb-2">
-                {loading ? `loading...` : (`${userData && userData.firstname} ${userData && userData.lastname}`)}
+                {loading
+                  ? `loading...`
+                  : `${userData && userData.firstname} ${
+                      userData && userData.lastname
+                    }`}
               </h1>
               <h2 className="text-gray-500 pb-2">
-                {loading ? `loading...` : (`${userData && userData.email}`)}
+                {loading ? `loading...` : `${userData && userData.email}`}
               </h2>
               <button className="rounded-md w-60 text-center shadow-sm bg-purple-200 p-2 mb-4">
                 Edit profile
@@ -66,18 +82,20 @@ export default function Profile() {
                   <h3>followers</h3>
                 </div>
                 <div className="text-purple-700 flex pr-2">
-                <h3 className="font-bold pr-1">10</h3>
+                  <h3 className="font-bold pr-1">10</h3>
                   <h3>following</h3>
                 </div>
                 <div className="text-purple-700 flex ">
-                <h3 className="font-bold pr-1">0</h3>
+                  <h3 className="font-bold pr-1">0</h3>
                   <h3>posts</h3>
                 </div>
               </div>
             </div>
           </div>
           <div className="relative flex flex-col rounded-md bg-gray-100 shadow-sm justify-center items-center p-10 mb-10 border-t-4 border-purple-500">
-            <button className="py-1 px-3 rounded-md bg-purple-200 text-center text-sm absolute top-2 right-2">Edit</button>
+            <button className="py-1 px-3 rounded-md bg-purple-200 text-center text-sm absolute top-2 right-2">
+              Edit
+            </button>
             <h1 className="text-2xl font-medium pb-2">About</h1>
             <div>
               I am passionate about software engineering and learning new
