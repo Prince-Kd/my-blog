@@ -149,7 +149,7 @@ export default function SignUp() {
         <div className="text-center">
           Already have an account?{" "}
           <Link href={"/log_in"}>
-            <a className="text-purple-500 text-center">Sign up</a>
+            <a className="text-purple-500 text-center">Log in</a>
           </Link>
         </div>
       </form>
