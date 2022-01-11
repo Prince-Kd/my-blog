@@ -219,3 +219,20 @@ export async function sendPassResetEmail(email, setLoading){
 
 }
 
+export async function changePassword(password, setLoading) {
+  const user = firebase.auth().currentUser;
+  setLoading(true)
+  return user
+    .updatePassword(password)
+    .then(() => {
+      setLoading(false)
+      swal('Reset password', "Password reset was successful", "success")
+      return true
+    })
+    .catch((error) => {
+      setLoading(false)
+      swal('Reset password', "An error occurred. Try again.", "error")
+      return false
+    });
+}
+
