@@ -23,7 +23,7 @@ export default function ForgotPassword() {
       if (password == confirmPassword) {
         resetPassword(password, oobCode, setLoading).then((val) => {
           if (val == true) {
-            router.push("/");
+            router.push("/log_in");
           }
         });
       }
@@ -70,7 +70,7 @@ export default function ForgotPassword() {
               }}
             />
             {!hideError ? (
-              <div className="text-xs text-red">Passwords do not match</div>
+              <div className="text-sm text-red-500">Passwords do not match</div>
             ) : null}
           </div>
           <div className="h-4"></div>
