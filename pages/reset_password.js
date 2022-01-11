@@ -5,7 +5,7 @@ import { useRouter } from "next/router";
 
 
 export default function ForgotPassword() {
-    console.log(code)
+    
   const [password, setPassword] = useState();
   const [confirmPassword, setConfirmPassword] = useState();
   const [loading, setLoading] = useState();
@@ -14,6 +14,8 @@ export default function ForgotPassword() {
 
   const router = useRouter();
   var { oobCode } = router.query
+
+  console.log(oobCode)
 
   const handleSubmit = (e) => {
     if (!loading) {
