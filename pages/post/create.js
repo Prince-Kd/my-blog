@@ -24,7 +24,7 @@ export default function Create({ author }) {
   const [loading, setLoading] = useState(false);
 
   return (
-    <div className="h-screen">
+    <div className="h-screen overflow-scroll">
       <Head>
         <title>BLOGGERSPACE | CREATE</title>
       </Head>
