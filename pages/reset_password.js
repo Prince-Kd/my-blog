@@ -1,9 +1,19 @@
 import Head from "next/head";
 import { useState } from "react";
-import { changePassword } from "../firebaseConfig";
+import { resetPassword } from "../firebaseConfig";
 import { useRouter } from "next/router";
 
-export default function ForgotPassword() {
+export async function getStaticProps({ params }){
+    var code = params.oobCode;
+    return {
+        props : {
+            code
+        }
+    }
+}
+
+export default function ForgotPassword({ code }) {
+    console.log(code)
   const [password, setPassword] = useState();
   const [confirmPassword, setConfirmPassword] = useState();
   const [loading, setLoading] = useState();
@@ -16,7 +26,7 @@ export default function ForgotPassword() {
     if (!loading) {
       e.preventDefault();
       if (password == confirmPassword) {
-        changePassword(password, setLoading).then((val) => {
+        resetPassword(password, code, setLoading).then((val) => {
           if (val == true) {
             router.push("/");
           }

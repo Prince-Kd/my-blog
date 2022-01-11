@@ -236,3 +236,18 @@ export async function changePassword(password, setLoading) {
     });
 }
 
+export async function resetPassword(password, code, setLoading){
+  setLoading(true)
+  return firebase.auth().confirmPasswordReset(code, password)
+    .then(() => {
+      setLoading(false)
+      swal('Reset password', "Password reset was successful", "success")
+      return true
+    })
+    .catch((error) => {
+      setLoading(false)
+      swal('Reset password', "Invalid reset code. Check your email and try again.", "error")
+      return false
+    })
+}
+
