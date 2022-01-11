@@ -9,7 +9,8 @@ import "firebase/storage";
 var database = firebase.database();
 var storage = firebase.storage();
 
-export async function loginUser(email, password) {
+export async function loginUser(email, password, setLoading) {
+  setLoading(true)
   return firebase
     .auth()
     .signInWithEmailAndPassword(email, password)
@@ -24,11 +25,13 @@ export async function loginUser(email, password) {
           profilePhoto: `${user.photoURL}`,
         })
       );
+      setLoading(false)
       return user;
     })
     .catch((error) => {
       var errorCode = error.code;
       var errorMessage = error.message;
+      setLoading(false)
       swal("Auht error", errorMessage, "error");
     });
 }

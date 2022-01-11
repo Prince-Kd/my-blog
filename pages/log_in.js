@@ -15,8 +15,7 @@ export default function LogIn() {
   const handleSubmit = (e) => {
     if (!loading) {
       e.preventDefault();
-      setLoading(true);
-      loginUser(email, password).then((data) => {
+      loginUser(email, password, setLoading).then((data) => {
         if(data){
           router.push("/");
         }
