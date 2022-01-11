@@ -3,16 +3,8 @@ import { useState } from "react";
 import { resetPassword } from "../firebaseConfig";
 import { useRouter } from "next/router";
 
-export async function getStaticProps({ params }){
-    var code = params.oobCode;
-    return {
-        props : {
-            code
-        }
-    }
-}
 
-export default function ForgotPassword({ code }) {
+export default function ForgotPassword() {
     console.log(code)
   const [password, setPassword] = useState();
   const [confirmPassword, setConfirmPassword] = useState();
@@ -21,12 +13,13 @@ export default function ForgotPassword({ code }) {
   const [hideError, setHideError] = useState(true);
 
   const router = useRouter();
+  var { oobCode } = router.query
 
   const handleSubmit = (e) => {
     if (!loading) {
       e.preventDefault();
       if (password == confirmPassword) {
-        resetPassword(password, code, setLoading).then((val) => {
+        resetPassword(password, oobCode, setLoading).then((val) => {
           if (val == true) {
             router.push("/");
           }
