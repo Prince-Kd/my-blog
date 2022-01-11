@@ -203,3 +203,19 @@ export async function uploadProfilePhoto(photo, setLoading) {
   });
 }
 
+export async function sendPassResetEmail(email, setLoading){
+  setLoading(true)
+  firebase.auth().sendPasswordResetEmail(email)
+  .then(() => {
+    setLoading(false)
+    swal('Password reset email', "Password reset email sent. Check your email to reset your password", "success")
+  })
+  .catch((error) => {
+    var errorCode = error.code;
+    var errorMessage = error.message;
+    setLoading(false)
+    swal('Password reset email', errorMessage, "error")
+  });  
+
+}
+

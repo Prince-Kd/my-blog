@@ -1,7 +1,21 @@
 import Head from "next/link";
 import { useState } from "react";
+import { sendPassResetEmail } from "../firebaseConfig";
+import { useRouter } from 'next/router'
+
+
 export default function ForgotPassword() {
     const [email, setEmail] = useState()
+    const [loading, setLoading] = useState()
+
+    const router = useRouter()
+
+    const handleSubmit = (e) => {
+        if(!loading){
+            e.preventDefault()
+            sendPassResetEmail(email, setLoading)
+        }
+    }
   return (
     <>
       <Head><title>BLOGGERSPACE | FORGOT PASSWORD</title></Head>
@@ -10,7 +24,7 @@ export default function ForgotPassword() {
         BLOGGER SPACE{" "}
       </h1>
       <div className="h-8"></div>
-      <h3>Enter your email reset a new password</h3>
+      <h3>Enter your email to set a new password</h3>
       <div className="h-4"></div>
       <form onSubmit={handleSubmit}>
         <div className="flex flex-col">
