@@ -24,7 +24,7 @@ export default function Create({ author }) {
   const [loading, setLoading] = useState(false);
 
   return (
-    <div className="h-screen overflow-clip">
+    <div className="h-screen">
       <Head>
         <title>BLOGGERSPACE | CREATE</title>
       </Head>

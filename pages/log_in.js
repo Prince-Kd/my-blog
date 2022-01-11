@@ -57,6 +57,7 @@ export default function LogIn() {
             }}
           />
         </div>
+        <Link href={"/forgot_password"}><a className="flex flex-row justify-end text-purple-500">Forgot password?</a></Link>
         <div className="h-4"></div>
         <input
           className="bg-purple-500 rounded-md h-12 w-80 text-center cursor-pointer text-white font-medium"
