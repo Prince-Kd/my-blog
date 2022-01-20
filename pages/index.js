@@ -15,7 +15,7 @@ export default function Home({ posts }) {
         <title>BLOGGERSPACE | HOME</title>
       </Head>
       <Header />
-      <div className=" grid grid-cols-3 h-screen w-screen overflow-hidden">
+      <div className=" grid grid-cols-3 h-full w-screen">
         <div className="border-r-2 border-purple-400 col-span-1 overflow-scroll px-16 py-20 flex flex-col ">
           <p className="text-xl font-semibold pb-2">Suggested topics</p>
           <hr className="mb-4" />
