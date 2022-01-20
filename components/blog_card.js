@@ -1,7 +1,7 @@
 export default function BlogCard({post}) {
   return (
-    <div className=" h-52 grid grid-cols-4 mb-10">
-      <div className="p-2 col-span-3">
+    <div className=" h-52 grid grid-cols-4 mb-10 shadow-md">
+      <div className="p-4 col-span-3">
         <div id="title" className="text-xl font-bold ">{post.title}</div>
         <div id="author" className="flex flex-row items-center">
             <div className="text-gray-500 text-sm italic mr-5">By {post.authorName}</div>
@@ -18,8 +18,8 @@ export default function BlogCard({post}) {
             <div className="text-center rounded-3xl px-2 py-1 bg-purple-200">{'Next js'}</div>
         </div>
       </div>
-      <div id="image" className=" w-52 bg-gray-200 border-purple-500 border-2 rounded-md">
-          <img className="h-52 w-52" src={post.postImage} alt="poster" />
+      <div id="image" className=" h-48 w-52 bg-gray-200 ">
+          <img className=" h-48 w-52" src={post.postImage} alt="poster" />
       </div>
     </div>
   );
