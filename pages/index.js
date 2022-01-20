@@ -8,6 +8,7 @@ import firebase from "firebase/app";
 import "firebase/database";
 
 export default function Home({ posts }) {
+  console.log(posts);
   return (
     <div className="h-screen overflow-hidden">
       <Head>
