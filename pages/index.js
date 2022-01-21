@@ -4,11 +4,16 @@ import PersonCard from "../components/person_card";
 import TopicChip from "../components/topics_chip";
 import Head from "next/head";
 import firebase from "firebase/app";
+import { useEffect } from "react";
 
 import "firebase/database";
 
-export default function Home({ posts }) {
-  console.log(posts);
+export default function Home({ posts, users }) {
+  useEffect(() => {
+    console.log(posts);
+    console.log(users);
+  }, []);
+
   return (
     <div className="h-screen overflow-hidden">
       <Head>
@@ -33,19 +38,24 @@ export default function Home({ posts }) {
             <p className="text-xl font-semibold pb-2">Who to follow</p>
             <hr className="mb-4" />
             <div className="flex flex-col mb-8">
+              {
+                users.map((user) => (
+                  <PersonCard name={`${user.firstname} ${user.lastname}`} img={user.profilePhoto} id={user.id} />
+                ))
+              }
+              {/* <PersonCard />
               <PersonCard />
               <PersonCard />
-              <PersonCard />
-              <PersonCard />
+              <PersonCard /> */}
             </div>
           </div>
         </div>
         <div className="overflow-scroll col-span-2 px-10 pb-20 pt-10">
           <h2 className="text-3xl font-medium ">Recommended Posts For You</h2>
           <hr className="w-82 mb-10" />
-          {
-            posts.map((post) => (<BlogCard key={post.index} post={post} />))
-          }
+          {posts.map((post) => (
+            <BlogCard key={post.index} post={post} />
+          ))}
         </div>
       </div>
     </div>
@@ -53,25 +63,47 @@ export default function Home({ posts }) {
 }
 
 export async function getStaticProps() {
-  return firebase
+  var posts = [];
+  var users = [];
+  await firebase
     .database()
     .ref("posts/")
     .once("value")
     .then(async (snapshot) => {
-      var posts = [];
       for (var postId in snapshot.val()) {
         await firebase
           .database()
           .ref("posts/" + postId)
           .get()
           .then((snapshot) => {
-            posts.push(snapshot.val())
+            posts.push(snapshot.val());
           });
       }
-      return {
-        props: {
-          posts
-        }
-      }
+      return posts;
     });
+
+  await firebase
+    .database()
+    .ref("users")
+    .limitToFirst(5)
+    .once("value")
+    .then(async (snapshot) => {
+      for (var userId in snapshot.val()) {
+        await firebase
+          .database()
+          .ref("users/" + userId)
+          .get()
+          .then((snapshot) => {
+            users.push(snapshot.val());
+          });
+      }
+      return users;
+    });
+
+  return {
+    props: {
+      posts,
+      users,
+    },
+  };
 }
