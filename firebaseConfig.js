@@ -102,12 +102,9 @@ export async function logOut() {
     });
 }
 
-export async function getUser() {
-  return firebase.auth().onAuthStateChanged((user) => {
-    if (user) {
-      return user;
-    }
-  });
+export const getUser = () => {
+  const user = JSON.parse(sessionStorage.getItem('user'));
+  return user.id;
 }
 
 export function addPost(postData, setLoading, setPostData) {
@@ -252,39 +249,42 @@ export async function resetPassword(password, code, setLoading){
     })
 }
 
-export async function getFollowers(){
-  const user = firebase.auth().currentUser;
-  return database.ref('users/' + user.uid + "/following").once('value').then((snapshot) => {
-    var following = [];
-    for (var id in snapshot.val()) {
-      database.ref('users/' + user.uid + "/following" + id).get().then((snapshot) => {
-        following.push(snapshot.val())
+export async function getFollowing(setFollowing){
+  firebase.auth().onAuthStateChanged((user) => {
+    if(user){
+      database.ref('users/' + user.uid + "/following").once('value').then((snapshot) => {
+        var following = [];
+        for (var id in snapshot.val()) {
+          database.ref('users/' + user.uid + "/following" + id).get().then((snapshot) => {
+            following.push(snapshot.val())
+          })
+        }
+        setFollowing(following)
       })
     }
-    return following
   })
+  
 }
 
-export async function followUser(userId, setLoading){
-  return firebase.auth().onAuthStateChanged(user => {
+export async function followUser(userId, setLoading, setFollow, setUser){
+  firebase.auth().onAuthStateChanged(user => {
     if(user){
       setLoading(true)
       var newPostKey = database.ref(`users/${user.uid}`).push().key;
       var following = {};
-      following['users/' + user.uid + "/followers/" + newPostKey] = {
+      following['users/' + user.uid + "/following/" + newPostKey] = {
         id: userId
       }
       database.ref().update(following, error => {
         if(error){
           setLoading(false)
-          return 0;
         }else{
           setLoading(false)
-          return 1
+          setFollow('Following')
         }
       })
     }else{
-      return -1;
+      setUser(false)
     }
   })
 }

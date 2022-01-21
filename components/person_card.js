@@ -1,11 +1,18 @@
-import { useState } from "react"
-import { followUser } from "../firebaseConfig"
+import { useEffect, useState } from "react"
+import { followUser, getFollowing } from "../firebaseConfig"
 import { useRouter } from "next/router";
 
 export default function PersonCard({id, name, img}){
     const [loading, setLoading] = useState(false);
-    const [follow, setFollow] = useState()
+    const [follow, setFollow] = useState('Follow');
+    const [user, setUser] = useState(true);
+    const [following, setFollowing] = useState()
+
     var router = useRouter();
+
+    useEffect(() => {
+        getFollowing(setFollowing)
+    }, [])
 
     return(
         <div className="flex flex-row justify-between items-center mb-3">
@@ -20,16 +27,9 @@ export default function PersonCard({id, name, img}){
                 <h2 className="flex flex-wrap text-sm text-gray-500">Mobile App Developer at Nerasol Ghana limited</h2>
             </div>
             <button className="rounded-full px-2 py-1 border-purple-500 border-2 hover:bg-purple-500 hover:text-white" onClick={() => {
-                followUser(id, setLoading).then((val) => {
-                    if(val == 0){
-
-                    }else if(val == 1){
-
-                    }else if(val == -1){
-
-                    }
-                })
-            }}>Follow</button>
+                followUser(id, setLoading, setFollow, setUser)
+            }}>{follow}</button>
         </div>
     )
 }
+

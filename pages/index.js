@@ -4,14 +4,19 @@ import PersonCard from "../components/person_card";
 import TopicChip from "../components/topics_chip";
 import Head from "next/head";
 import firebase from "firebase/app";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 
 import "firebase/database";
+import { getUser } from "../firebaseConfig";
 
 export default function Home({ posts, users }) {
+  const [myuser, setUser] = useState()
   useEffect(() => {
-    console.log(posts);
-    console.log(users);
+    firebase.auth().onAuthStateChanged((user) => {
+      if(user){
+        setUser(user)
+      }
+    })
   }, []);
 
   return (
@@ -39,9 +44,11 @@ export default function Home({ posts, users }) {
             <hr className="mb-4" />
             <div className="flex flex-col mb-8">
               {
-                users.map((user) => (
-                  <PersonCard name={`${user.firstname} ${user.lastname}`} img={user.profilePhoto} id={user.id} />
-                ))
+                users.map((user) => {
+                  if(user.id != myuser.uid){
+                    return <PersonCard name={`${user.firstname} ${user.lastname}`} img={user.profilePhoto} id={user.id} />
+                  }
+                })
               }
               {/* <PersonCard />
               <PersonCard />
@@ -65,6 +72,7 @@ export default function Home({ posts, users }) {
 export async function getStaticProps() {
   var posts = [];
   var users = [];
+  
   await firebase
     .database()
     .ref("posts/")
