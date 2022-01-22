@@ -20,8 +20,6 @@ export default function PersonCard({id, name, img,}){
         for(var i=0; i<following.length; i++){
             if(id == following[i]?.id)
                 value = true
-            else
-                value = false
         }
         return value
     }
