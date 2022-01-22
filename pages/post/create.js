@@ -111,12 +111,4 @@ export default function Create({ author }) {
   );
 }
 
-// // export async function getStaticProps() {
-// //     var user = JSON.parse(sessionStorage.getItem("user"));
 
-// //   return {
-// //     props: {
-// //       author: user.displayName,
-// //     },
-// //   };
-// }

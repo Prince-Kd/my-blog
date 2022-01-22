@@ -103,8 +103,8 @@ export async function logOut() {
 }
 
 export const getUser = () => {
-  const user = JSON.parse(sessionStorage.getItem('user'));
-  return user.id;
+  const user = firebase.auth().currentUser;
+  return user?.uid;
 }
 
 export function addPost(postData, setLoading, setPostData) {
@@ -270,17 +270,22 @@ export async function followUser(userId, setLoading, setFollow, setUser){
   firebase.auth().onAuthStateChanged(user => {
     if(user){
       setLoading(true)
-      var newPostKey = database.ref(`users/${user.uid}`).push().key;
+      var newFollowingKey = database.ref(`users/${user.uid}`).push().key;
+      var newFollowerKey = database.ref(`users/${userId}`).push().key;
       var following = {};
-      following['users/' + user.uid + "/following/" + newPostKey] = {
+      var follower = {};
+      following['users/' + user.uid + "/following/" + newFollowingKey] = {
         id: userId
       }
-      database.ref().update(following, error => {
+      database.ref().update(following, (error) => {
         if(error){
           setLoading(false)
         }else{
           setLoading(false)
-          setFollow('Following')
+          follower['users/' + userId + "/followers/" + newFollowerKey] = {
+            id: user.uid
+          }
+          database.ref().update(follower)
         }
       })
     }else{
