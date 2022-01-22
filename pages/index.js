@@ -44,9 +44,9 @@ export default function Home({ posts, users }) {
             <hr className="mb-4" />
             <div className="flex flex-col mb-8">
               {
-                users.map((user) => {
-                  if(user.id != myuser.uid){
-                    return <PersonCard name={`${user.firstname} ${user.lastname}`} img={user.profilePhoto} id={user.id} />
+                users.map((user, index) => {
+                  if(user.id != myuser?.uid){
+                    return <PersonCard key={index} name={`${user.firstname} ${user.lastname}`} img={user.profilePhoto} id={user.id}/>
                   }
                 })
               }
@@ -60,9 +60,10 @@ export default function Home({ posts, users }) {
         <div className="overflow-scroll col-span-2 px-10 pb-20 pt-10">
           <h2 className="text-3xl font-medium ">Recommended Posts For You</h2>
           <hr className="w-82 mb-10" />
-          {posts.map((post) => (
-            <BlogCard key={post.index} post={post} />
-          ))}
+          {posts.map((post, index) => {
+            //console.log(index)
+            return <BlogCard key={index} post={post} />
+})}
         </div>
       </div>
     </div>

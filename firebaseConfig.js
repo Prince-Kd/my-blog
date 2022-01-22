@@ -252,10 +252,10 @@ export async function resetPassword(password, code, setLoading){
 export async function getFollowing(setFollowing){
   firebase.auth().onAuthStateChanged((user) => {
     if(user){
-      database.ref('users/' + user.uid + "/following").once('value').then((snapshot) => {
+      database.ref('users/' + user.uid + "/following").once('value').then(async (snapshot) => {
         var following = [];
         for (var id in snapshot.val()) {
-          database.ref('users/' + user.uid + "/following" + id).get().then((snapshot) => {
+          await database.ref('users/' + user.uid + "/following/" + id).get().then((snapshot) => {
             following.push(snapshot.val())
           })
         }

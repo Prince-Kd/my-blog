@@ -43,6 +43,22 @@ export default function Profile() {
 
   const toggle = () => setModal(!modal);
 
+  const followerCount = () => {
+    var count = [];
+    for(var follower in userData?.followers){
+      count.push(follower)
+    }
+    return count.length
+  }
+
+  const followingCount = () => {
+      var count = [];
+    for(var following in userData?.following){
+      count.push(following)
+    }
+    return count.length
+  }
+
   const editProflePhoto = () => {};
   return (
     <div className="w-screen overflow-hidden ">
@@ -91,11 +107,11 @@ export default function Profile() {
               </button>
               <div className="flex flex-row justify-around items-center">
                 <div className="text-purple-700 flex mr-2">
-                  <h3 className="font-bold pr-1">20</h3>
+                  <h3 className="font-bold pr-1">{followerCount()}</h3>
                   <h3>followers</h3>
                 </div>
                 <div className="text-purple-700 flex pr-2">
-                  <h3 className="font-bold pr-1">10</h3>
+                  <h3 className="font-bold pr-1">{followingCount()}</h3>
                   <h3>following</h3>
                 </div>
                 <div className="text-purple-700 flex ">
