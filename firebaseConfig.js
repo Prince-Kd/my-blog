@@ -104,7 +104,7 @@ export async function logOut() {
 
 export const getUser = () => {
   const user = firebase.auth().currentUser;
-  return user?.uid;
+  return user;
 }
 
 export function addPost(postData, setLoading, setPostData) {

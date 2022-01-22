@@ -15,9 +15,7 @@ export default function Create({ author }) {
   const [postData, setPostData] = useState({
     title: "",
     post: "",
-    author: getUser().then((user) => {
-      return user && user.displayName;
-    }),
+    author: getUser()?.displayName,
     date: today.toLocaleDateString(undefined, options),
     postImage: "",
   });
