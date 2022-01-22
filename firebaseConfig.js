@@ -266,7 +266,7 @@ export async function getFollowing(setFollowing){
   
 }
 
-export async function followUser(userId, setLoading, setFollow, setUser){
+export async function followUser(userId, setLoading, setUser){
   firebase.auth().onAuthStateChanged(user => {
     if(user){
       setLoading(true)

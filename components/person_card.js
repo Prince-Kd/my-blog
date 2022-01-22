@@ -46,7 +46,7 @@ export default function PersonCard({ id, name, img }) {
         onClick={() => {
           if (user) {
             if (findFollowing() != true) {
-              followUser(id, setLoading, setFollow, setUser);
+              followUser(id, setLoading, setUser);
             }
           } else {
             router.push("/login");
