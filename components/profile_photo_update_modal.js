@@ -1,7 +1,6 @@
 import Modal from "react-modal";
 import { useState } from "react";
 import { uploadProfilePhoto } from "../firebaseConfig";
-import app from "../pages/_app";
 
 //Modal.setAppElement(app);
 

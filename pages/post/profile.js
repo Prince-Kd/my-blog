@@ -8,40 +8,44 @@ import "firebase/auth";
 import Link from "next/link";
 import Head from "next/head";
 import ProfilePhotoModal from "../../components/profile_photo_update_modal";
+import AboutModal from "../../components/about_modal";
 
 export default function Profile() {
   const [userData, setUserData] = useState();
   const [loading, setLoading] = useState(true);
-  const [modal, setModal] = useState(false);
+  const [ImgModal, setImgModal] = useState(false);
+  const [aboutModal, setAboutModal] = useState(false);
 
   //console.log(userData);
-
-  firebase.auth().onAuthStateChanged((user) => {
-    if (user) {
-      firebase
-        .database()
-        .ref("/users/" + user.uid)
-        .get()
-        .then((snapshot) => {
-            var data = snapshot.val()
-          firebase
-            .database()
-            .ref("/users/" + user.uid + "/posts")
-            .get().then((snapshot) => {
-                var posts = [];
-                snapshot.forEach((childSnapshot) => {
-                    posts.push(childSnapshot.val());
-                })
-              setLoading(false);
-              setUserData({ ...data, posts: posts  });
-            });
-        });
-    }
-  });
+  useEffect(() => {
+    firebase.auth().onAuthStateChanged((user) => {
+      if (user) {
+        firebase
+          .database()
+          .ref("/users/" + user.uid)
+          .get()
+          .then((snapshot) => {
+              var data = snapshot.val()
+            firebase
+              .database()
+              .ref("/users/" + user.uid + "/posts")
+              .get().then((snapshot) => {
+                  var posts = [];
+                  snapshot.forEach((childSnapshot) => {
+                      posts.push(childSnapshot.val());
+                  })
+                setLoading(false);
+                setUserData({ ...data, posts: posts  });
+              });
+          });
+      }
+    });
+  }, [])
 
   console.log(userData)
 
-  const toggle = () => setModal(!modal);
+  const toggleImgModal = () => setImgModal(!ImgModal);
+  const toggleAboutModal = () => setAboutModal(!aboutModal);
 
   const followerCount = () => {
     var count = [];
@@ -85,11 +89,11 @@ export default function Profile() {
               )}
               <button
                 className="py-1 px-3 rounded-md bg-purple-200 text-center text-sm absolute bottom-2 right-2"
-                onClick={toggle}
+                onClick={toggleImgModal}
               >
                 Edit
               </button>
-              <ProfilePhotoModal toggle={toggle} modal={modal} />
+              <ProfilePhotoModal toggle={toggleImgModal} modal={ImgModal} />
             </div>
             <div>
               <h1 className=" text-3xl font-bold pb-2">
@@ -122,11 +126,12 @@ export default function Profile() {
             </div>
           </div>
           <div className="relative flex flex-col rounded-md bg-gray-100 shadow-sm justify-center items-center p-10 mb-10 border-t-4 border-purple-500">
-            <button className="py-1 px-3 rounded-md bg-purple-200 text-center text-sm absolute top-2 right-2">
+            <button className="py-1 px-3 rounded-md bg-purple-200 text-center text-sm absolute top-2 right-2" onClick={toggleAboutModal}>
               Edit
             </button>
             <h1 className="text-2xl font-medium pb-2">About</h1>
             <div>{userData && userData.about || "Say something about yourself."}</div>
+            <AboutModal toggle={toggleAboutModal} modal={aboutModal} about={userData?.about} />
           </div>
           <div className="flex flex-col rounded-md bg-gray-100 shadow-sm justify-center items-center p-10 mb-10 border-t-4 border-purple-500">
             <h1 className="text-2xl font-medium pb-2">Posts</h1>

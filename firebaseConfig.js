@@ -314,3 +314,11 @@ export function unFollowUser(id){
   })
 }
 
+export function updateAbout(data){
+  firebase.auth().onAuthStateChanged((user) => {
+    if(user){
+      database.ref(`users/${user.uid}`).update({about: data})
+    }
+  })
+}
+
