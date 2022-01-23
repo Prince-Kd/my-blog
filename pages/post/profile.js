@@ -29,7 +29,7 @@ export default function Profile() {
             firebase
               .database()
               .ref("/users/" + user.uid + "/posts")
-              .get().then((snapshot) => {
+              .once('value').then((snapshot) => {
                   var posts = [];
                   snapshot.forEach((childSnapshot) => {
                       posts.push(childSnapshot.val());
@@ -128,7 +128,7 @@ export default function Profile() {
               Edit
             </button>
             <h1 className="text-2xl font-medium pb-2">About</h1>
-            <div>{userData && userData.about || "Say something about yourself."}</div>
+            <div>{userData?.about || "Say something about yourself."}</div>
             <AboutModal toggle={toggleAboutModal} modal={aboutModal} about={userData?.about} />
           </div>
           <div className="flex flex-col rounded-md bg-gray-100 shadow-sm justify-center items-center p-10 mb-10 border-t-4 border-purple-500">
