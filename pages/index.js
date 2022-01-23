@@ -7,7 +7,7 @@ import firebase from "firebase/app";
 import { useEffect, useState } from "react";
 
 import "firebase/database";
-import { getUser } from "../firebaseConfig";
+import { getUser, unFollowUser } from "../firebaseConfig";
 
 export default function Home({ posts, users }) {
   const [myuser, setUser] = useState()
@@ -17,6 +17,7 @@ export default function Home({ posts, users }) {
         setUser(user)
       }
     })
+    unFollowUser()
   }, []);
 
   return (

@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { followUser, getFollowing, getUser } from "../firebaseConfig";
+import { followUser, getFollowing, getUser, unFollowUser } from "../firebaseConfig";
 import { useRouter } from "next/router";
 
 export default function PersonCard({ id, name, img }) {
@@ -47,6 +47,8 @@ export default function PersonCard({ id, name, img }) {
           if (user) {
             if (findFollowing() != true) {
               followUser(id, setLoading, setUser);
+            }else{
+                unFollowUser(id)
             }
           } else {
             router.push("/login");

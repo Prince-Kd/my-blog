@@ -294,3 +294,23 @@ export async function followUser(userId, setLoading, setUser){
   })
 }
 
+export function unFollowUser(id){
+  firebase.auth().onAuthStateChanged((user) => {
+    if(user){
+      database.ref(`users/${user.uid}/following`).orderByKey().once('value').then((snapshot) => {
+        snapshot.forEach((childSnapshot) => {
+          var followingKey = childSnapshot.key;
+          var followingUser = childSnapshot.val()?.id;
+          if(followingUser == id){
+            database.ref(`users/${user.uid}/following/${followingKey}`).remove().then(() => {
+              console.log(`${followingKey} removed`)
+            }).catch(error => {
+              console.log(error)
+            })
+          }
+        })
+      })
+    }
+  })
+}
+
