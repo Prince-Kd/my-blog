@@ -40,9 +40,7 @@ export default function Profile() {
           });
       }
     });
-  }, [])
-
-  console.log(userData)
+  })
 
   const toggleImgModal = () => setImgModal(!ImgModal);
   const toggleAboutModal = () => setAboutModal(!aboutModal);

@@ -314,10 +314,17 @@ export function unFollowUser(id){
   })
 }
 
-export function updateAbout(data){
+export function updateAbout(data, setLoading){
+  setLoading(true)
   firebase.auth().onAuthStateChanged((user) => {
     if(user){
-      database.ref(`users/${user.uid}`).update({about: data})
+      database.ref(`users/${user.uid}`).update({about: data}).then(() => {
+        swal('Success', 'About saved successfully!', 'success')
+        setLoading(false)
+      }).catch(error => {
+        swal('Error', 'An error occurred. Try again', 'error')
+        setLoading(false)
+      })
     }
   })
 }
