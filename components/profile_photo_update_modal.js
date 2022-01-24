@@ -21,7 +21,7 @@ export default function ProfilePhotoModal({ toggle, modal }) {
       isOpen={modal}
       onRequestClose={toggle}
       className={
-        "bg-gray-200 flex flex-col py-10 rounded-3xl w-1/3 m-auto mt-20"
+        "bg-gray-200 flex flex-col lg:py-10 py-5 rounded-3xl lg:w-1/3 m-auto lg:mt-20 mt-40  mx-10"
       }
     >
       <form
@@ -32,12 +32,13 @@ export default function ProfilePhotoModal({ toggle, modal }) {
           }
         }}
       >
-        <div className="flex flex-col w-96 h-1/2 m-auto rounded-lg items-center">
-          <div className="mb-4 h-52 w-52 rounded-full border-4 border-white text-center flex justify-center items-center relative">
-            <img className="rounded-full h-52 w-52" src={image.preview} />
+        <div className="flex flex-col h-1/2 m-auto rounded-lg justify-center items-center relative">
+          <button className="absolute top-0 right-4 font-semibold text-xl" onClick={toggle}>X</button>
+          <div className="mb-4 lg:h-52 lg:w-52 h-48 w-48 rounded-full border-4 border-white text-center flex justify-center items-center ">
+            <img className="rounded-full lg:h-52 lg:w-52 h-48 w-48" src={image.preview} />
           </div>
           <label>Select photo</label>
-          <div className="border-2 border-gray-300 rounded-md mb-4 flex items-center p-2">
+          <div className="border-2 border-gray-300 rounded-md mb-4 flex items-center p-2 w-60">
             <input
               required
               type={"file"}
@@ -47,7 +48,7 @@ export default function ProfilePhotoModal({ toggle, modal }) {
             />
           </div>
           <input
-            className="bg-purple-500 rounded-md h-12 w-40 text-center cursor-pointer text-white font-medium"
+            className="bg-purple-500 rounded-md h-12 lg:w-40 w-32  text-center cursor-pointer text-white font-medium"
             type={"submit"}
             value={loading ? "LOADING..." : "UPLOAD"}
           />
