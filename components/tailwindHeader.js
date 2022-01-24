@@ -81,7 +81,7 @@ export default function Example() {
                 <div className="hidden sm:block sm:ml-6 ">
                   <div className="flex space-x-4 lg:justify-center lg:items-center">
                     {navigation.map((item) => (
-                      <Link href={item.href}>
+                      <Link href={item.href} key={item.name}>
                         <a
                           className={`mx-2 ${
                             router.pathname == item.href
