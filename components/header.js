@@ -48,9 +48,9 @@ export default function Header() {
   return (
     <div className="flex flex-row justify-between items-center p-3 shadow-purple-300 shadow-md">
       <Link href={home}>
-        <a className="  text-3xl text-purple-500 font-bold">BLOGGER SPACE</a>
+        <a className=" flex items-center justify-center text-xl lg:text-3xl text-purple-500 font-bold">BLOGGER SPACE</a>
       </Link>
-      <div className="flex flex-row items-center">
+      <div className=" hidden lg:flex lg:flex-row lg:items-center">
         <Link href={home}>
           <a
             className={`mx-2 ${
@@ -97,10 +97,10 @@ export default function Header() {
         </Link>
       </div>
       {user ? (
-        <div className="flex flex-row justify-center items-center">
-          <div className="h-12 w-12 rounded-full flex justify-center items-center border-purple-500 border-2 text-center">
+        <div className=" lg:flex lg:flex-row lg:justify-center lg:items-center">
+          <div className="h-8 w-8 lg:h-12 lg:w-12 rounded-full flex justify-center items-center text-center">
             {user && user.photoURL ? (
-              <img src={user.photoURL} alt="MK" className="h-12 w-12 rounded-full" />
+              <img src={user.photoURL} className="h-8 w-8 lg:h-12 lg:w-12 rounded-full" />
             ) : user && user.displayName ? (
               `${user.displayName.charAt(0).toUpperCase()}${user.displayName
                 .split(" ")[1]
@@ -110,14 +110,14 @@ export default function Header() {
           </div>
           <button
             type="button"
-            className="bg-purple-500 rounded-md h-8 p-1 text-white font-medium text-center hover:h-9 mx-2 w-24"
+            className="hidden bg-purple-500 rounded-md h-8 p-1 text-white font-medium text-center hover:h-9 mx-2 w-24"
             onClick={handleLogout}
           >
             LOG OUT
           </button>
         </div>
       ) : (
-        <div className="flex flex-row">
+        <div className="hidden lg:flex lg:flex-row">
           <Link href={log_in}>
             <a
               type="button"
@@ -139,3 +139,5 @@ export default function Header() {
     </div>
   );
 }
+
+

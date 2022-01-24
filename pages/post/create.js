@@ -3,6 +3,7 @@ import { getUser, addPost } from "../../firebaseConfig";
 import Head from "next/head";
 import { useState } from "react";
 import swal from "sweetalert";
+import Example from "../../components/tailwindHeader";
 
 export default function Create({ author }) {
   const options = {
@@ -26,8 +27,9 @@ export default function Create({ author }) {
       <Head>
         <title>BLOGGERSPACE | CREATE</title>
       </Head>
-      <Header />
-      <div className="w-1/2 h-full mx-auto p-10">
+      {/* <Header /> */}
+      <Example />
+      <div className=" h-full mx-auto lg:p-10 p-5">
         <h2 className="text-xl font-semibold">Create a post</h2>
         <hr className="mb-4" />
         <form
@@ -98,7 +100,7 @@ export default function Create({ author }) {
           </div>
           <div className="flex flex-row justify-end">
             <input
-              className="bg-purple-500 rounded-md h-12 w-52 text-center cursor-pointer text-white font-medium"
+              className="bg-purple-500 rounded-md lg:h-12 lg:w-52 h-10 w-44 text-center cursor-pointer text-white font-medium hover:border-2 hover:border-purple-500 hover:bg-white hover:text-purple-500"
               type={"submit"}
               value={loading ? "LOADING..." : "POST"}
             />

@@ -9,6 +9,7 @@ import Link from "next/link";
 import Head from "next/head";
 import ProfilePhotoModal from "../../components/profile_photo_update_modal";
 import AboutModal from "../../components/about_modal";
+import Example from "../../components/tailwindHeader";
 
 export default function Profile() {
   const [userData, setUserData] = useState();
@@ -67,8 +68,9 @@ export default function Profile() {
       <Head>
         <title>BLOGGERSPACE | PROFILE</title>
       </Head>
-      <Header />
-      <div className="px-72 py-10">
+      {/* <Header /> */}
+      <Example />
+      <div className="lg:px-72 py-10 sm:px-20">
         <div className="pb-10">
           <div className="mb-10 p-10 rounded-md flex flex-row bg-gray-100 shadow-sm justify-around border-t-4 border-purple-500 ">
             <div className=" h-52 w-52 rounded-full border-4 border-white text-center flex justify-center items-center relative">

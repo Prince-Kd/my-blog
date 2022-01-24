@@ -8,6 +8,7 @@ import { useEffect, useState } from "react";
 
 import "firebase/database";
 import { getUser, unFollowUser } from "../firebaseConfig";
+import Example from "../components/tailwindHeader";
 
 export default function Home({ posts, users }) {
   const [myuser, setUser] = useState()
@@ -25,9 +26,10 @@ export default function Home({ posts, users }) {
       <Head>
         <title>BLOGGERSPACE | HOME</title>
       </Head>
-      <Header />
-      <div className=" grid grid-cols-3 h-full w-screen">
-        <div className="border-r-2 border-purple-400 col-span-1 overflow-scroll px-16 py-20 flex flex-col ">
+      {/* <Header /> */}
+      <Example />
+      <div className="sm:flex-none lg:grid lg:grid-cols-3 h-full w-screen">
+        <div className="hidden border-r-2 border-purple-400 col-span-1 overflow-scroll px-16 py-20 lg:flex lg:flex-col ">
           <p className="text-xl font-semibold pb-2">Suggested topics</p>
           <hr className="mb-4" />
           <div className="flex flex-wrap mb-8">
@@ -58,8 +60,8 @@ export default function Home({ posts, users }) {
             </div>
           </div>
         </div>
-        <div className="overflow-scroll col-span-2 px-10 pb-20 pt-10">
-          <h2 className="text-3xl font-medium ">Recommended Posts For You</h2>
+        <div className="overflow-scroll lg:col-span-2 lg:px-10 px-5 pb-20 pt-10">
+          <h2 className="text-xl lg:text-3xl font-medium ">Recommended Posts For You</h2>
           <hr className="w-82 mb-10" />
           {posts.map((post, index) => {
             //console.log(index)
