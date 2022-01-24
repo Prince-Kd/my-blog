@@ -29,7 +29,7 @@ export default function Create({ author }) {
       </Head>
       {/* <Header /> */}
       <Example />
-      <div className=" h-full mx-auto lg:p-10 p-5">
+      <div className=" h-full lg:w-1/2 mx-auto lg:p-10 p-5">
         <h2 className="text-xl font-semibold">Create a post</h2>
         <hr className="mb-4" />
         <form
