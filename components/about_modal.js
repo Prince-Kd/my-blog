@@ -4,7 +4,7 @@ import { updateAbout } from "../firebaseConfig";
 
 export default function AboutModal({ toggle, modal, about }) {
   const [loading, setLoading] = useState(false);
-  const [newAbout, setNewAbout] = useState(about || '');
+  const [newAbout, setNewAbout] = useState(`${about}` || '');
   const handleSubmit = (e) => {
     e.preventDefault();
     if (!loading) {
