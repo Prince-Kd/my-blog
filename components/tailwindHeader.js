@@ -47,7 +47,7 @@ export default function Example() {
     }).then((willDelete) => {
       if (willDelete) {
         logOut().then(() => {
-          router.push(home);
+          router.push('/');
         });
       }
     });

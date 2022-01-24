@@ -23,11 +23,11 @@ export default function LogIn() {
     }
   };
   return (
-    <div className="flex flex-col justify-center items-center h-screen my-auto">
+    <div className="flex flex-col justify-center items-center h-screen my-auto overflow-hidden">
       <Head>
         <title>BLOGGERSPACE | LOG IN</title>
       </Head>
-      <h1 className="text-5xl text-purple-500 text-center font-bold ">
+      <h1 className="text-3xl lg:text-5xl text-purple-500 text-center font-bold ">
         BLOGGER SPACE{" "}
       </h1>
       <div className="h-8"></div>

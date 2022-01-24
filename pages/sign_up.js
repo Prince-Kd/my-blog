@@ -35,15 +35,15 @@ export default function SignUp() {
       <Head>
         <title>BLOGGERSPACE | SIGN UP</title>
       </Head>
-      <h1 className="text-5xl text-purple-500 text-center font-bold ">
+      <h1 className="text-3xl lg:text-5xl text-purple-500 text-center font-bold ">
         BLOGGER SPACE{" "}
       </h1>
       <div className="h-8"></div>
       <h3>Create an account and start sharing your posts</h3>
       <div className="h-4"></div>
       <form onSubmit={handleSubmit}>
-        <div className="flex flex-row justify-around items-center">
-          <div className="flex flex-col">
+        <div className="flex flex-col lg:flex-row justify-around items-center">
+          <div className="flex flex-col mb-4">
             <label>Firstname:</label>
             <input
               type={"text"}
@@ -70,8 +70,8 @@ export default function SignUp() {
           </div>
         </div>
         <div className="h-4"></div>
-        <div className="flex flex-row items-center justify-around">
-          <div className="flex flex-col">
+        <div className="flex flex-col lg:flex-row items-center justify-around">
+          <div className="flex flex-col mb-4">
             <label>Email:</label>
             <input
               type={"text"}
@@ -98,8 +98,8 @@ export default function SignUp() {
           </div>
         </div>
         <div className="h-4"></div>
-        <div className="flex flex-row justify-around items-center">
-          <div className="flex flex-col">
+        <div className="flex flex-col lg:flex-row justify-around items-center ">
+          <div className="flex flex-col mb-4">
             <label>Password:</label>
             <input
               type={"password"}

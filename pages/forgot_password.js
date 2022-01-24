@@ -17,8 +17,8 @@ export default function ForgotPassword() {
       <Head>
         <title>BLOGGERSPACE | FORGOT PASSWORD</title>
       </Head>
-      <div className="flex flex-col justify-center items-center h-screen my-auto">
-        <h1 className="text-5xl text-purple-500 text-center font-bold ">
+      <div className="flex flex-col justify-center items-center h-screen my-auto overflow-hidden">
+        <h1 className=" text-3xl lg:text-5xl text-purple-500 text-center font-bold ">
           BLOGGER SPACE{" "}
         </h1>
         <div className="h-8"></div>
