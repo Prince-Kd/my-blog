@@ -31,7 +31,7 @@ export default function SignUp() {
     }
   };
   return (
-    <div className="flex flex-col justify-center items-center h-screen my-auto mx-auto">
+    <div className="flex flex-col justify-center items-center h-screen my-auto mx-auto overflow-scroll">
       <Head>
         <title>BLOGGERSPACE | SIGN UP</title>
       </Head>
