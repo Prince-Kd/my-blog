@@ -110,7 +110,7 @@ export default function Example() {
                   <Link href={"/log_in"}>
                     <a
                       type="button"
-                      className="bg-purple-500 rounded-md h-8 p-1 text-white font-medium text-center hover:h-9 ml-2 w-20 lg:w-24"
+                      className="bg-purple-500 rounded-md h-8 p-1 text-white font-medium text-center hover:h-9 ml-2 w-24"
                     >
                       LOG IN
                     </a>
