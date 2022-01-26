@@ -1,9 +1,11 @@
 import Header from "../../components/header";
 import { getUser, addPost } from "../../firebaseConfig";
 import Head from "next/head";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import swal from "sweetalert";
 import Example from "../../components/tailwindHeader";
+import firebase from "firebase/app";
+import 'firebase/auth';
 
 export default function Create({ author }) {
   const options = {
@@ -13,14 +15,23 @@ export default function Create({ author }) {
     day: "numeric",
   };
   const today = new Date();
+  const [user, setUser] = useState()
   const [postData, setPostData] = useState({
     title: "",
     post: "",
-    author: getUser()?.displayName,
+    author: user?.displayName,
     date: today.toLocaleDateString(undefined, options),
     postImage: "",
   });
   const [loading, setLoading] = useState(false);
+
+  useEffect(() => {
+    firebase.auth().onAuthStateChanged(user => {
+      if(user){
+        setUser(user)
+      }
+    })
+  })
 
   return (
     <div className="h-screen overflow-scroll">
@@ -99,16 +110,41 @@ export default function Create({ author }) {
             />
           </div>
           <div className="flex flex-row justify-end">
-            <input
+            <button
               className="bg-purple-500 rounded-md lg:h-12 lg:w-52 h-10 w-44 text-center cursor-pointer text-white font-medium hover:border-2 hover:border-purple-500 hover:bg-white hover:text-purple-500"
               type={"submit"}
-              value={loading ? "LOADING..." : "POST"}
-            />
+            >
+              {loading ? (
+                <div className="flex flex-row justify-center items-center">
+                  <svg
+                    class="animate-spin -ml-1 mr-3 h-5 w-5 text-white"
+                    xmlns="http://www.w3.org/2000/svg"
+                    fill="none"
+                    viewBox="0 0 24 24"
+                  >
+                    <circle
+                      class="opacity-25"
+                      cx="12"
+                      cy="12"
+                      r="10"
+                      stroke="currentColor"
+                      stroke-width="4"
+                    ></circle>
+                    <path
+                      class="opacity-75"
+                      fill="currentColor"
+                      d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"
+                    ></path>
+                  </svg>
+                  LOADING...
+                </div>
+              ) : (
+                "POST"
+              )}
+            </button>
           </div>
         </form>
       </div>
     </div>
   );
 }
-
-

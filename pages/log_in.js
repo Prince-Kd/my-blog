@@ -4,7 +4,6 @@ import { loginUser } from "../firebaseConfig";
 import { useState } from "react";
 import Head from "next/head";
 
-
 export default function LogIn() {
   const router = useRouter();
 
@@ -16,7 +15,7 @@ export default function LogIn() {
     if (!loading) {
       e.preventDefault();
       loginUser(email, password, setLoading).then((data) => {
-        if(data){
+        if (data) {
           router.push("/");
         }
       });
@@ -57,13 +56,49 @@ export default function LogIn() {
             }}
           />
         </div>
-        <Link href={"/forgot_password"}><a className="flex flex-row justify-end text-purple-500">Forgot password?</a></Link>
+        <Link href={"/forgot_password"}>
+          <a className="flex flex-row justify-end text-purple-500">
+            Forgot password?
+          </a>
+        </Link>
         <div className="h-4"></div>
-        <input
+        <button
+          type="submit"
+          className="bg-purple-500 rounded-md h-12 w-80 text-center cursor-pointer text-white font-medium"
+        >
+          {loading ? (
+            <div className="flex flex-row justify-center items-center">
+              <svg
+                class="animate-spin -ml-1 mr-3 h-5 w-5 text-white"
+                xmlns="http://www.w3.org/2000/svg"
+                fill="none"
+                viewBox="0 0 24 24"
+              >
+                <circle
+                  class="opacity-25"
+                  cx="12"
+                  cy="12"
+                  r="10"
+                  stroke="currentColor"
+                  stroke-width="4"
+                ></circle>
+                <path
+                  class="opacity-75"
+                  fill="currentColor"
+                  d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"
+                ></path>
+              </svg>
+              LOADING...
+            </div>
+          ) : (
+            "LOG IN"
+          )}
+        </button>
+        {/* <input
           className="bg-purple-500 rounded-md h-12 w-80 text-center cursor-pointer text-white font-medium"
           type={"submit"}
           value={loading ? "LOADING..." : "LOG IN"}
-        />
+        /> */}
         <div className="h-4"></div>
         <div className="text-center">
           {`Don't have an account? `}

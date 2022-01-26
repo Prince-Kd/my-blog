@@ -25,7 +25,6 @@ export async function loginUser(email, password, setLoading) {
           profilePhoto: `${user.photoURL}`,
         })
       );
-      setLoading(false)
       return user;
     })
     .catch((error) => {

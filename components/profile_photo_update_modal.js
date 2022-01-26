@@ -21,7 +21,7 @@ export default function ProfilePhotoModal({ toggle, modal }) {
       isOpen={modal}
       onRequestClose={toggle}
       className={
-        "bg-gray-200 flex flex-col lg:py-10 py-5 rounded-3xl lg:w-1/3 m-auto lg:mt-20 mt-40  mx-10"
+        "bg-gray-200 flex flex-col lg:py-10 py-5 rounded-3xl lg:w-1/3 lg:m-auto lg:mt-20 mt-40  mx-10 relative"
       }
     >
       <form
@@ -32,8 +32,8 @@ export default function ProfilePhotoModal({ toggle, modal }) {
           }
         }}
       >
-        <div className="flex flex-col h-1/2 m-auto rounded-lg justify-center items-center relative">
-          <button className="absolute top-0 right-4 font-semibold text-xl" onClick={toggle}>X</button>
+        <div className="flex flex-col h-1/2 m-auto rounded-lg justify-center items-center ">
+          <button className="absolute top-2 right-4 font-semibold text-lg text-white bg-gray-600 px-3 hover:text-purple-500" onClick={toggle}>x</button>
           <div className="mb-4 lg:h-52 lg:w-52 h-48 w-48 rounded-full border-4 border-white text-center flex justify-center items-center ">
             <img className="rounded-full lg:h-52 lg:w-52 h-48 w-48" src={image.preview} />
           </div>
